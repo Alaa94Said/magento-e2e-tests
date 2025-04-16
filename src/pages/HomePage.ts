@@ -1,8 +1,15 @@
-import { logger } from '../utils/logger';
+import { Logger } from '../utils/logger'; 
+import { $ } from '@wdio/globals';
+
+Logger.log('This is a log message');
+Logger.info('This is an info message');
+Logger.warn('This is a warning message');
+Logger.error('This is an error message');
+Logger.debug('This is a debug message');
 
 export default class HomePage {
   open() {
-    logger.info("Opening Home Page");
+    Logger.info("Opening Home Page");
     browser.url('/');
   }
 
@@ -10,9 +17,10 @@ export default class HomePage {
     return $('div.block-promo');
   }
 
-  isHeroBannerVisible(): boolean {
-    const visible = this.heroBanner.isDisplayed();
-    logger.info(`Hero Banner visible: ${visible}`);
+  async isHeroBannerVisible(): Promise<boolean> {
+    const visible = await this.heroBanner.isDisplayed();
+    Logger.info(`Hero Banner visible: ${visible}`);
     return visible;
   }
+  
 }

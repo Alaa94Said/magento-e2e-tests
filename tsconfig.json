@@ -1,14 +1,23 @@
 {
-    "compilerOptions": {
-      "target": "ES2020",
-      "module": "commonjs",
-      "lib": ["es2020"],
-      "outDir": "./dist",
-      "rootDir": "./",
-      "strict": true,
-      "esModuleInterop": true,
-      "types": ["node", "@wdio/globals/types", "@wdio/mocha-framework"]
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "lib": ["es2020"],
+    "outDir": "./dist",
+    "rootDir": "./",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "baseUrl": "./src",
+    "paths": {
+      "*": ["node_modules/*"]
     },
-    "exclude": ["node_modules"]
-  }
-  
+    "types": ["node", "@wdio/globals", "@wdio/types", "@wdio/cucumber-framework"]
+  },
+  //"exclude": ["node_modules"],
+  "include": ["src/**/*.ts",
+"src/config/wdio.conf.ts",
+"features/**/*.ts" ]
+}

@@ -11,7 +11,7 @@
 ## 🚀 Setup
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/magento-e2e-tests.git
+git clone https://github.com/Alaa94Said/magento-e2e-tests.git
 cd magento-e2e-tests
 npm install
 npm run test

@@ -2,21 +2,27 @@
   "name": "magento",
   "version": "1.0.0",
   "main": "index.js",
- "scripts": {
-  "test": "npx wdio run ./src/config/wdio.conf.ts",
-  "report": "allure generate reports/allure-results --clean -o reports/allure-report && allure open reports/allure-report"
-},
+  "scripts": {
+    "test": "npx wdio run src/config/wdio.conf.ts",
+    "report": "allure generate reports/allure-results --clean -o reports/allure-report && allure open reports/allure-report",
+    "wdio": "wdio run ./wdio.conf.ts"
+  },
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@testing-library/webdriverio": "^3.2.1",
     "@types/node": "^22.14.1",
     "@wdio/allure-reporter": "^9.12.3",
     "@wdio/cli": "^9.12.5",
     "@wdio/cucumber-framework": "^9.12.5",
+    "@wdio/globals": "^9.12.5",
     "@wdio/local-runner": "^9.12.5",
     "@wdio/spec-reporter": "^9.12.3",
+    "@wdio/types": "^9.12.3",
+    "@wdio/visual-service": "^6.4.0",
     "allure-commandline": "^2.33.0",
+    "chromedriver": "^135.0.1",
     "dotenv": "^16.5.0",
     "loglevel": "^1.9.2",
     "ts-node": "^10.9.2",
