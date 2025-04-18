@@ -1,6 +1,6 @@
 import { Given, When, Then } from '@wdio/cucumber-framework';
-import HomePage from '../../src/pages/HomePage';
-import SearchPage from '../../src/pages/SearchPage';
+import HomePage from 'pageobjects/HomePage';
+import SearchPage from 'pageobjects/SearchPage';
 import { expect } from 'expect-webdriverio';
 
 const homePage = new HomePage();

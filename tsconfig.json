@@ -10,14 +10,15 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
-    "baseUrl": "./src",
+    "baseUrl": "./src/features",
     "paths": {
-      "*": ["node_modules/*"]
-    },
-    "types": ["node", "@wdio/globals", "@wdio/types", "@wdio/cucumber-framework"]
+        "@pageobjects/*": ["pageobjects/*"]
+      },
+    "types": [ "@wdio/globals", "@wdio/types", "@wdio/cucumber-framework", "@wdio/globals/types"]
   },
-  //"exclude": ["node_modules"],
+  "exclude": ["node_modules"],
   "include": ["src/**/*.ts",
-"src/config/wdio.conf.ts",
+"wdio.conf.ts",
 "features/**/*.ts" ]
+
 }

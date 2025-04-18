@@ -1,5 +1,5 @@
 Feature: Home Page Display
 
-  Scenario: Verify hero banner is visible
+  Scenario: Verify home banner is visible
     Given I open the home page
-    Then the hero banner should be visible
+    Then the home banner should be visible

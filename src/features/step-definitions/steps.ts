@@ -3,7 +3,7 @@ import { expect, $ } from '@wdio/globals'
 import { browser } from '@wdio/globals';
 
 Given(/^I am on the (\w+) page$/, async (page) => {
-    await browser.url(`https://the-internet.herokuapp.com/${page}`);
+    await browser.url(`https://magento.softwaretestingboard.com/${page}`);
 });
 
 When(/^I login with (\w+) and (.+)$/, async (username, password) => {

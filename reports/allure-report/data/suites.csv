@@ -1,0 +1,5 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","3588","Given I open the home page","","Fri Apr 18 20:50:57 EET 2025","passed","Fri Apr 18 20:51:00 EET 2025","","Category Navigation: Navigate to Women > Tops > Jackets","",""
+"","0","hook:","","Fri Apr 18 20:51:02 EET 2025","failed","Fri Apr 18 20:51:02 EET 2025","","","",""
+"","1429","When I navigate to the Jackets category","","Fri Apr 18 20:51:00 EET 2025","passed","Fri Apr 18 20:51:02 EET 2025","","Category Navigation: Navigate to Women > Tops > Jackets","",""
+"","18","Then I should see jackets listed","","Fri Apr 18 20:51:02 EET 2025","passed","Fri Apr 18 20:51:02 EET 2025","","Category Navigation: Navigate to Women > Tops > Jackets","",""

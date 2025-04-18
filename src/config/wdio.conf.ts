@@ -1,15 +1,19 @@
+console.log('CWD:', process.cwd());
+import path from 'path';
 
 export const config: WebdriverIO.Config = {
 
     runner: 'local',
     tsConfigPath: './tsconfig.json',
-    specs: [  'features/home/homepage.feature'
-    ],
+    specs: [path.resolve(__dirname, '../features/category/category-navigation.feature')],
+
+    //specs: [path.resolve(__dirname, '../features/**/*.feature')],
+
     maxInstances: 10,
     capabilities: [{
         browserName: 'chrome'
     }],
-    logLevel: 'info',
+    logLevel: 'error',
     baseUrl: process.env.BASE_URL || 'https://magento.softwaretestingboard.com',
     waitforTimeout: 10000,
   
@@ -17,17 +21,19 @@ export const config: WebdriverIO.Config = {
     framework: 'cucumber',
 
     cucumberOpts: {
-      require: ['./features/step-definitions/*.ts'],
+      require: ['./src/features/step-definitions/category.steps.ts'],
+        //'./src/features/step-definitions/*.ts'],
       timeout: 60000,
     },
+    
     reporters: [
-      'spec',
-      ['allure', {
-        outputDir: './reports/allure-results',
-        disableWebdriverStepsReporting: false,
-        disableWebdriverScreenshotsReporting: false,
-      }],
+      'spec', 
+      ['allure', { outputDir: 'reports/allure-results' }],
+
+  
     ],
+  
+    
     automationProtocol: 'webdriver',
 
 

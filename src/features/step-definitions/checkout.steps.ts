@@ -1,12 +1,13 @@
 import { Given, When, Then } from '@wdio/cucumber-framework';
-import CartPage from '../../src/pages/CartPage';
-import CheckoutPage from '../../src/pages/CheckoutPage';
-import ProductPage from '../../src/pages/ProductPage';
-import SearchPage from '../../src/pages/SearchPage';
+import CartPage from 'pageobjects/CartPage';
+import CheckoutPage from 'pageobjects/CheckoutPage';
+import ProductPage from 'pageobjects/ProductPage';
+import SearchPage from 'pageobjects/SearchPage';
 import { expect } from 'expect-webdriverio';
 //import { Browser } from 'webdriverio';
 import { browser } from '@wdio/globals';
-
+const chalk = require('chalk');
+console.log(chalk.gray('This is gray text'));
 
 const cart = new CartPage();
 const checkout = new CheckoutPage();
@@ -18,18 +19,24 @@ Given('I have a product in my cart', () => {
   search.searchFor('jacket');
   product.selectFirstProduct();
   product.chooseSizeAndColor();
-  product.clickAddToCart();
+  product.addToCart();
   browser.pause(1000);
 });
 
 When('I proceed to checkout', () => {
   cart.openCart();
+  browser.pause(1000);
   cart.proceedToCheckout();
 });
 
 When('I fill in the shipping information', () => checkout.fillShippingInfo());
 
-Then('I should reach the payment page', () => {
-  browser.pause(5000);
-  expect(checkout.placeOrderButtonVisible()).toBe(true);
-});
+Then('I should reach the payment page', async () => {
+  await browser.pause(5000); // optional, just for timing
+  const isVisible = await checkout.placeOrderButtonVisible();
+  expect(isVisible).toBe(true);
+}); 
+
+/* Then('I should reach the payment page', async () => {
+  expect(await checkout.isOnPaymentPage()).toBe(true);
+}); */

@@ -5,7 +5,8 @@
   "scripts": {
     "test": "npx wdio run src/config/wdio.conf.ts",
     "report": "allure generate reports/allure-results --clean -o reports/allure-report && allure open reports/allure-report",
-    "wdio": "wdio run ./wdio.conf.ts"
+    "wdio": "wdio run ./wdio.conf.ts",
+    "preinstall": "npx npm-force-resolutions"
   },
   "author": "",
   "license": "ISC",
@@ -13,7 +14,7 @@
   "devDependencies": {
     "@testing-library/webdriverio": "^3.2.1",
     "@types/node": "^22.14.1",
-    "@wdio/allure-reporter": "^9.12.3",
+    "@wdio/allure-reporter": "^9.12.6",
     "@wdio/cli": "^9.12.5",
     "@wdio/cucumber-framework": "^9.12.5",
     "@wdio/globals": "^9.12.5",
@@ -25,8 +26,15 @@
     "chromedriver": "^135.0.1",
     "dotenv": "^16.5.0",
     "loglevel": "^1.9.2",
+    "npm-force-resolutions": "^0.0.10",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3",
     "webdriverio": "^9.12.5"
+  },
+  "resolutions": {
+    "chalk": "4.1.2"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2"
   }
 }

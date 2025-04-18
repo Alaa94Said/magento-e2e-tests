@@ -1,24 +1,17 @@
-// src/utils/logger.ts
+// utils/logger.ts
+enum LogLevel {
+  INFO = 'INFO',
+  DEBUG = 'DEBUG',
+  ERROR = 'ERROR',
+}
 
-export class Logger {
-    static log(message: string): void {
-      console.log(`[LOG]: ${message}`);
-    }
-  
-    static info(message: string): void {
-      console.info(`[INFO]: ${message}`);
-    }
-  
-    static warn(message: string): void {
-      console.warn(`[WARN]: ${message}`);
-    }
-  
-    static error(message: string): void {
-      console.error(`[ERROR]: ${message}`);
-    }
-  
-    static debug(message: string): void {
-      console.debug(`[DEBUG]: ${message}`);
-    }
-  }
-  
+function log(level: LogLevel, module: string, message: string) {
+  const timestamp = new Date().toISOString();
+  console.log(`[${level}] [${module}] ${message}`);
+}
+
+export const Logger = {
+  info: (module: string, message: string) => log(LogLevel.INFO, module, message),
+  debug: (module: string, message: string) => log(LogLevel.DEBUG, module, message),
+  error: (module: string, message: string) => log(LogLevel.ERROR, module, message),
+};
