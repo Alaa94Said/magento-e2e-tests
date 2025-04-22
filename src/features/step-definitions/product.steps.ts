@@ -36,4 +36,9 @@ Then('the cart should show the product', async () => {
   const isProductInCart = await cart.getProductName(selectedProductName); // Use the dynamic product name
   console.info('[Cart Check] Is product in cart?', isProductInCart);
   expect(isProductInCart).toBe(true);
+  
+/*   browser.pause(10000);
+  console.log('[DEBUG] URL during cart check:', await browser.getUrl());
+  const isProductAdded = await productPage.isProductAddedToCart(); // Use method from ProductPage
+  expect(isProductAdded).toBe(true); */
 });

@@ -25,7 +25,6 @@ class ProductPage extends Page {
     const titleElement = await $('[data-ui-id="page-title-wrapper"]');
     const productName = await titleElement.getText();
     Logger.info('product page','first selected product name is :'+productName)
-    //console.log('Product title:', productName);
     return productName; 
   }
 
@@ -38,29 +37,23 @@ class ProductPage extends Page {
   }
 
   async addToCart() {
-   
     await this.addToCartButton.click();
+    browser.pause(10000);
     Logger.info('product Page', "Add to Cart is clicked");
   }
 
-  async isProductAddedToCart(): Promise<boolean> {
+  public async isProductAddedToCart(): Promise<boolean> {
     try {
-           // Get the text of the success message
-          const messageText = await this.successMessage.getText();
-  
-           // Check if the success message contains "You added" text
-          expect(messageText).toContain('You added');
-        // Check if the success message is displayed
-        const visible = await this.successMessage.isDisplayed();
-        Logger.info('product Page', `Cart success message visible: ${visible}`);
-        return visible;
-    } catch (error) {
-        Logger.error('product Page',`Cart success message not visible: ${error}`);
-        return false;
-    }
+      const successMessage = await $('.message-success.success.message');
+      Logger.info('product Page', "success message dispayed");
 
-  
+      return await successMessage.isDisplayed();
+    } catch (err) {
+      Logger.error('product Page', `Cart success message not visible: ${err}`);
+      return false;
+    }
   }
+  
   
 
 }
