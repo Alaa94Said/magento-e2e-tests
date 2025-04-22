@@ -1,6 +1,7 @@
 import Page from './page';
 import { $, $$ } from '@wdio/globals';
 import chalk from 'chalk';
+import { Logger } from '../../utils/logger';
 
 console.log(chalk.gray('CheckoutPage initialized'));
 
@@ -28,19 +29,70 @@ export class CheckoutPage extends Page {
   get continueToShippingButton() {
     return $('button.continue');
   }
-
-
+  get emailField() {
+    return $('//input[@id="customer-email"]');
+  }
+  
+  get firstNameField() {
+    return $('[name="firstname"]');
+  }
+  
+  get lastNameField() {
+    return $('[name="lastname"]');  
+  }
+  
+  get streetField() {
+    return $('[name="street[0]"]');
+  }
+  
+  get cityField() {
+    return $('[name="city"]');
+  }
+  
+  get regionDropdown() {
+    return $('[name="region_id"]');
+  }
+  
+  get zipField() {
+    return $('[name="postcode"]');
+  }
+  
+  get countryDropdown() {
+    return $('[name="country_id"]');
+  }
+  
+  get phoneField() {
+    return $('[name="telephone"]');
+  }
+  
+  get shippingMethodRadio() {
+    return $('input[type=radio][name="ko_unique_1"]');
+  }
+  
   async fillShippingDetails(details: ShippingInfo): Promise<void> {
- 
-    await $('#customer-email').setValue(details.email);
-    await $('#SNET33I').setValue(details.firstName);
-    await $('#R445Y4E').setValue(details.lastName);
-    await $('#AUXXRVB').setValue(details.street);
-    await $('#HO2QS7L').setValue(details.city);
-    await $('#RU2SBTA').selectByVisibleText(details.region);
-    await $('#QIMDHXH').setValue(details.zip);
-    await $('#UPFO34G').selectByVisibleText(details.country);
-    await $('#J2MGYY7').setValue(details.phone);
+    await $('.loading-mask').waitForDisplayed({ reverse: true, timeout: 15000 });
+/* 
+    const isExisting = await this.emailField.isExisting();
+    const isDisplayed = await this.emailField.isDisplayed();
+ console.log(`Email field - Exists: ${isExisting}, Displayed: ${isDisplayed}`);
+
+    await this.emailField.waitForDisplayed({ timeout: 10000 });
+  await this.emailField.waitForEnabled({ timeout: 10000 });
+   Logger.info('checkout Page',"email field is visible"); */
+
+
+    await this.emailField.setValue(details.email);
+    await this.firstNameField.setValue(details.firstName);
+    await this.lastNameField.setValue(details.lastName);
+    await this.streetField.setValue(details.street);
+    await this.cityField.setValue(details.city);
+    await this.regionDropdown.selectByVisibleText(details.region);
+    await this.zipField.setValue(details.zip);
+    await this.countryDropdown.selectByVisibleText(details.country);
+    await this.phoneField.setValue(details.phone);
+  
+    await this.shippingMethodRadio.waitForClickable({ timeout: 5000 });
+    await this.shippingMethodRadio.click();
 
     const shippingMethod = await $('input[type=radio][name="ko_unique_1"]');
     await shippingMethod.waitForClickable({ timeout: 5000 });
@@ -48,7 +100,7 @@ export class CheckoutPage extends Page {
   }
 
   async continueToPayment(): Promise<void> {
-    const nextBtn = await $('button.continue');
+    const nextBtn =  $('button.continue');
     await nextBtn.waitForClickable({ timeout: 5000 });
     await nextBtn.click();
   }

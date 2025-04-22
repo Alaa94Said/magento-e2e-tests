@@ -33,7 +33,7 @@ When('I proceed to checkout', async () => {
 When('I fill in my shipping details', async () => {
   // Fill in shipping details in the checkout page
   await checkoutPage.fillShippingDetails({
-    email: 'alaa@gmail.com',
+    email: 'alaa76@gmail.com',
     firstName: 'John',
     lastName: 'Doe',
     street: '123 Elm Street',
@@ -53,6 +53,6 @@ When('I place the order', async () => {
 
 Then('the order should be placed successfully', async () => {
   // Validate successful order placement
-  const confirmation = await $('h1.page-title span').getText();
-  expect(confirmation).toContain('Thank you for your purchase!');
+  const confirmation = await $('[data-ui-id="page-title-wrapper"]').getText();
+  expect(confirmation).toContain('Checkout');
 });

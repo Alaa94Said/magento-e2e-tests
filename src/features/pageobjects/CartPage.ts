@@ -2,10 +2,12 @@
 import { $, $$ } from '@wdio/globals';
 import Page from './page';
 import chalk from 'chalk';
+import { Logger } from '../../utils/logger';
+
 
 console.log(chalk.gray('CartPage initialized'));
 
- class CartPage extends Page { 
+ export class CartPage extends Page { 
   get cartTitle() {
     return $('h1.page-title span');
   }
@@ -23,10 +25,12 @@ console.log(chalk.gray('CartPage initialized'));
     return productName === expectedName;
   }
   
-
+ 
   async proceedToCheckout(): Promise<void> {
     await this.checkoutButton.waitForClickable({ timeout: 5000 });
     await this.checkoutButton.click();
+    Logger.info('Cart Page',"proceed to check out clicked");
+
   }
 
   async openCart(): Promise<void> {

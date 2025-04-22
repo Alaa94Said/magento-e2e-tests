@@ -16,7 +16,7 @@ class ProductPage extends Page {
 
     return $('.message-success.success.message');
   }
-  
+
 
   // Actions
   async selectFirstProduct(): Promise<string> {
@@ -46,7 +46,6 @@ class ProductPage extends Page {
     try {
       const successMessage = await $('.message-success.success.message');
       Logger.info('product Page', "success message dispayed");
-
       return await successMessage.isDisplayed();
     } catch (err) {
       Logger.error('product Page', `Cart success message not visible: ${err}`);
