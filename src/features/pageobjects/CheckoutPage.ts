@@ -71,16 +71,6 @@ export class CheckoutPage extends Page {
   
   async fillShippingDetails(details: ShippingInfo): Promise<void> {
     await $('.loading-mask').waitForDisplayed({ reverse: true, timeout: 15000 });
-/* 
-    const isExisting = await this.emailField.isExisting();
-    const isDisplayed = await this.emailField.isDisplayed();
- console.log(`Email field - Exists: ${isExisting}, Displayed: ${isDisplayed}`);
-
-    await this.emailField.waitForDisplayed({ timeout: 10000 });
-  await this.emailField.waitForEnabled({ timeout: 10000 });
-   Logger.info('checkout Page',"email field is visible"); */
-
-
     await this.emailField.setValue(details.email);
     await this.firstNameField.setValue(details.firstName);
     await this.lastNameField.setValue(details.lastName);

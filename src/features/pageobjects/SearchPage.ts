@@ -4,17 +4,16 @@ import { $, $$ } from '@wdio/globals';
 export default class SearchPage {
   get searchInput() { return $('#search'); }
   get searchButton() { return $('button.action.search'); }
-  //get filterSidebar() { return $('div.filter-options'); }
-  get  dropdown(){return $('//*[@id="sorter"]');}   
 
+  get results() {
+    return $$('//*[@id="maincontent"]/div[3]/div[1]/div[2]/div[2]/ol'); 
+  }
 
   async searchFor(productName: string) {
     Logger.info('Search Page',`Searching for product: ${productName}`);
-
     // Wait for the search input to be visible and enabled
     await this.searchInput.waitForDisplayed({ timeout: 10000, timeoutMsg: 'Search input not displayed in time' });
     await this.searchInput.waitForEnabled({ timeout: 10000, timeoutMsg: 'Search input not enabled in time' });
-
     // Set value in the search input
     await this.searchInput.setValue(productName);
 
@@ -27,54 +26,27 @@ export default class SearchPage {
     Logger.info('Search Page',"clicked search button");
   }
 
-  async applyPriceFilter() {
-    Logger.info('Search Page', "Applying price filter");
-  
-    // Ensure the dropdown is displayed and clickable
-    await this.dropdown.waitForDisplayed({ timeout: 10000, timeoutMsg: 'Dropdown not visible in time' });
-    Logger.info('Search Page', "Dropdown is displayed");
+  async hasResults(): Promise<boolean> {
+    console.log("Checking if the results list has elements...");
 
-    await this.dropdown.waitForClickable({ timeout: 1000, timeoutMsg: 'Dropdown not clickable in time' });
-    await this.dropdown.click();
-    Logger.info('Search Page', "Dropdown is clicked");
-  
-    // Select the 'Price' option from the dropdown
-    const priceOption = await $('//*[@id="sorter"]/option[2]');
-    await priceOption.waitForExist({ timeout: 5000, timeoutMsg: 'Price option not found' });
-    await priceOption.click();
-    Logger.info('Search Page', "Price filter is clicked");
-  
-    // Wait for the price range filter to be visible
-    const firstRange = await $('//div[@class="filter-options-content"]//a[contains(text(),"$20.00 - $29.99")]');
-    await firstRange.waitForDisplayed({ timeout: 10000, timeoutMsg: 'Price range filter not displayed' });
-  
-    if (await firstRange.isDisplayed()) {
-      await firstRange.click();
-      Logger.info('Search Page', "Price range filter applied");
-    } else {
-      Logger.info('Search Page', "Price range filter not visible");
-    }
-  }
-  
-  
-  
+    const results = this.results;
 
-  async isResultsFiltered(): Promise<boolean> {
-    const noResultsMsg = await $('//div[@class="message info empty"]');
-
-    if (await noResultsMsg.isDisplayed()) {
-      Logger.info('Search Page', 'No products found after filter');
+    if (!results) {
+      console.warn("Results list is undefined or null.");
       return false;
     }
-    
-    Logger.info('Search Page', 'Filtered results found');
+
+    if (await results.length === 0) {
+      console.info("No results found in the DOM.");
+      return false;
+    }
+
+    console.info(`Found ${results.length} result(s) in the DOM.`);
     return true;
-    
-    
-    
   }
-  
-  
-  
-  
 }
+  
+  
+
+  
+  

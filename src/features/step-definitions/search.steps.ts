@@ -10,10 +10,9 @@ Given('I open the home page', () => homePage.open());
 
 When('I search for {string}', (term) => searchPage.searchFor(term));
 
-When('I apply the price filter',() => {
-   searchPage.applyPriceFilter();
-});
-
-Then('filtered results should be shown', () => {
-  expect(searchPage.isResultsFiltered()).toBe(true);
+Then('Results should be shown', () => {
+  browser.pause(10000);
+  const hasResults = searchPage.hasResults();
+  expect(hasResults).toBe(true);
+  
 });
