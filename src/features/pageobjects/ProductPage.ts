@@ -12,16 +12,21 @@ class ProductPage extends Page {
     return $('h1.page-title');
   }
 
-  get cartSuccessMessage() {
-    return $('div.message-success.success.message div=You added');
+  get successMessage() {
+
+    return $('.message-success.success.message');
   }
   
 
   // Actions
-  selectFirstProduct() {
-    Logger.info('product Page',"Selecting first product from search results");
-    const first = $('li.product-item a.product-item-link');
-    first.click();
+  async selectFirstProduct(): Promise<string> {
+    const firstProductLink = await $('div.product-item-info a'); 
+    await firstProductLink.click();
+    const titleElement = await $('[data-ui-id="page-title-wrapper"]');
+    const productName = await titleElement.getText();
+    Logger.info('product page','first selected product name is :'+productName)
+    //console.log('Product title:', productName);
+    return productName; 
   }
 
   async chooseSizeAndColor() {
@@ -33,26 +38,28 @@ class ProductPage extends Page {
   }
 
   async addToCart() {
-    Logger.info('product Page', "Clicking Add to Cart");
-    await this.addToCartButton.waitForDisplayed();
-    await this.addToCartButton.waitForClickable();
+   
     await this.addToCartButton.click();
-    
+    Logger.info('product Page', "Add to Cart is clicked");
   }
 
   async isProductAddedToCart(): Promise<boolean> {
     try {
-        // Wait until the success message is displayed
-        await this.cartSuccessMessage.waitForDisplayed({ timeout: 5000 });
-        
+           // Get the text of the success message
+          const messageText = await this.successMessage.getText();
+  
+           // Check if the success message contains "You added" text
+          expect(messageText).toContain('You added');
         // Check if the success message is displayed
-        const visible = await this.cartSuccessMessage.isDisplayed();
+        const visible = await this.successMessage.isDisplayed();
         Logger.info('product Page', `Cart success message visible: ${visible}`);
         return visible;
     } catch (error) {
         Logger.error('product Page',`Cart success message not visible: ${error}`);
         return false;
     }
+
+  
   }
   
 

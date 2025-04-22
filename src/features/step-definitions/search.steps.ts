@@ -10,8 +10,8 @@ Given('I open the home page', () => homePage.open());
 
 When('I search for {string}', (term) => searchPage.searchFor(term));
 
-When('I apply the {string} filter', (type) => {
-  if (type === 'Price') searchPage.applyPriceFilter();
+When('I apply the price filter',() => {
+   searchPage.applyPriceFilter();
 });
 
 Then('filtered results should be shown', () => {

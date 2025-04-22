@@ -1,0 +1,4 @@
+{
+  "using": "css selector",
+  "value": "div.message-success.success.message div=You added"
+}

@@ -1,32 +1,36 @@
-import { $ } from '@wdio/globals';
-//import { Logger } from '../../utils/logger';
+// CartPage.ts
+import { $, $$ } from '@wdio/globals';
+import Page from './page';
+import chalk from 'chalk';
 
-// utils/logger.ts
-import logger from '@wdio/logger';
-const chalk = require('chalk');
-console.log(chalk.gray('This is gray text'));
+console.log(chalk.gray('CartPage initialized'));
 
-export const Logger = logger('CartPage');
-
-
-export default class CartPage {
-  
-  async openCart() {
-    const cartLink = await $("//a[contains(@class, 'showcart')]/span[text()='My Cart']");
-await cartLink.click();
-
-    
-    //await $('a.action.showcart').click();
-  
+ class CartPage extends Page { 
+  get cartTitle() {
+    return $('h1.page-title span');
   }
 
-  async proceedToCheckout() {
-    const checkoutButton = await $('#top-cart-btn-checkout');
-  await checkoutButton.waitForDisplayed({ timeout: 10000 });
-  await checkoutButton.waitForClickable({ timeout: 10000 });
-  await checkoutButton.scrollIntoView();
-  await browser.pause(500); 
-  await checkoutButton.click();
-    Logger.info('"Proceed to Checkout" clicked.');
+  get checkoutButton() {
+    return $('[data-role="proceed-to-checkout"]');
+  }
+
+  async getProductName(expectedName: string): Promise<boolean> {
+    // Locate the product name inside the table
+    const productNameElement = await $('td .product-item-name a');
+    // Get the text of the product name
+    const productName = await productNameElement.getText();
+    // Return true if the product name matches the expected name, otherwise false
+    return productName === expectedName;
+  }
+  
+
+  async proceedToCheckout(): Promise<void> {
+    await this.checkoutButton.waitForClickable({ timeout: 5000 });
+    await this.checkoutButton.click();
+  }
+
+  async openCart(): Promise<void> {
+    await super.open('/checkout/cart');
   }
 }
+export default  CartPage;

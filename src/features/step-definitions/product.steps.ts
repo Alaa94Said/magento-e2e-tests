@@ -2,17 +2,21 @@ import { Given, When, Then } from '@wdio/cucumber-framework';
 import ProductPage from 'pageobjects/ProductPage';
 import { expect } from 'expect-webdriverio';
 import SearchPage from 'pageobjects/SearchPage';
-import { pause } from 'webdriverio/build/commands/browser';
+import CartPage from 'pageobjects/CartPage';
 
 const search = new SearchPage();
-
+const cart = new CartPage();
 const productPage = new ProductPage();
+
+let selectedProductName: string; // Variable to store the product name
+
 Given('I search for "jacket"', () => {
   browser.url('/');
-  search.searchFor('jacket');})
+  search.searchFor('jacket');
+});
 
 When('I select a product from results', async () => {
-  await productPage.selectFirstProduct();
+  selectedProductName = await productPage.selectFirstProduct(); // Store the product name
 });
 
 When('I choose size and color', async () => {
@@ -21,11 +25,15 @@ When('I choose size and color', async () => {
 
 When('I add it to the cart', async () => {
   await productPage.addToCart();
+  browser.pause(10000); // Wait for the product to be added to the cart
+});
+
+When('I proceed to the cart page', async () => {
+  await browser.url('/checkout/cart');
 });
 
 Then('the cart should show the product', async () => {
-  const isInCart = await productPage.isProductAddedToCart();
-  
-  expect(isInCart).toBe(true);
-
+  const isProductInCart = await cart.getProductName(selectedProductName); // Use the dynamic product name
+  console.info('[Cart Check] Is product in cart?', isProductInCart);
+  expect(isProductInCart).toBe(true);
 });

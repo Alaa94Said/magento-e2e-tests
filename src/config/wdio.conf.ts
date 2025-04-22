@@ -5,7 +5,7 @@ export const config: WebdriverIO.Config = {
 
     runner: 'local',
     tsConfigPath: './tsconfig.json',
-    specs: [path.resolve(__dirname, '../features/category/category-navigation.feature')],
+    specs: [path.resolve(__dirname, '../features/search/search-filter.feature')],
 
     //specs: [path.resolve(__dirname, '../features/**/*.feature')],
 
@@ -21,7 +21,7 @@ export const config: WebdriverIO.Config = {
     framework: 'cucumber',
 
     cucumberOpts: {
-      require: ['./src/features/step-definitions/category.steps.ts'],
+      require: ['./src/features/step-definitions/search.steps.ts'],
         //'./src/features/step-definitions/*.ts'],
       timeout: 60000,
     },

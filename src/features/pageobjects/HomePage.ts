@@ -8,7 +8,7 @@ export default class HomePage extends Page {
   get heroBanner() { return $('div.block-promo'); }
 
   async searchForProduct(productName: string) {
-    Logger.info(`Searching for product: ${productName}`);
+    Logger.info('Home Page',`Searching for product: ${productName}`);
     await this.searchInput.setValue(productName);
     await this.searchButton.click();
   }
@@ -21,16 +21,16 @@ export default class HomePage extends Page {
         const isVisible = await homePageTitle.isDisplayed();
         await homePageTitle.waitForDisplayed({ timeout: 5000 });
 
-        Logger.info(`Home Page title visible: ${isVisible}`);
+        Logger.info('Home Page',`Home Page title visible: ${isVisible}`);
         return isVisible;
     } catch (error) {
-        Logger.error(`Failed to check Home Page title visibility: ${error}`);
+        Logger.error('Home Page',`Failed to check Home Page title visibility: ${error}`);
         return false;
     }
 }
 
   open() {
-    Logger.info('Opening Home Page');
+    Logger.info('Home Page','Opening Home Page');
     return super.open('/');
   }
 }
