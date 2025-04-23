@@ -1,5 +1,5 @@
 import Page from './page';
-import { $ } from '@wdio/globals';
+import { $, browser } from '@wdio/globals';
 import { Logger } from '../../utils/logger';
 
 class ProductPage extends Page {
@@ -8,53 +8,46 @@ class ProductPage extends Page {
     return $('#product-addtocart-button'); 
   }
 
-  get productTitle() {
-    return $('h1.page-title');
-  }
-
   get successMessage() {
-
     return $('.message-success.success.message');
   }
 
-
   // Actions
   async selectFirstProduct(): Promise<string> {
-    const firstProductLink = await $('div.product-item-info a'); 
+    Logger.info('Product Page', 'Selecting the first product');
+    const firstProductLink = $('div.product-item-info a');
     await firstProductLink.click();
-    const titleElement = await $('[data-ui-id="page-title-wrapper"]');
+
+    const titleElement = $('[data-ui-id="page-title-wrapper"]');
     const productName = await titleElement.getText();
-    Logger.info('product page','first selected product name is :'+productName)
-    return productName; 
+    Logger.info('Product Page', `Selected product name: ${productName}`);
+    return productName;
   }
 
-  async chooseSizeAndColor() {
-    Logger.info('product Page',"Choosing size and color");
+  async chooseSizeAndColor(): Promise<void> {
+    Logger.info('Product Page', 'Choosing size and color');
     const size = $('#option-label-size-143-item-170');
     const color = $('div.swatch-attribute.color div[option-label]');
-    if (await size.isExisting()) size.click();
-    if (await color.isExisting()) color.click();
+
+    if (await size.isExisting()) await size.click();
+    if (await color.isExisting()) await color.click();
   }
 
-  async addToCart() {
+  async addToCart(): Promise<void> {
+    Logger.info('Product Page', 'Clicking "Add to Cart"');
     await this.addToCartButton.click();
-    browser.pause(10000);
-    Logger.info('product Page', "Add to Cart is clicked");
+    await browser.pause(3000); // Consider replacing with a waitUntil or waitForDisplayed
   }
 
-  public async isProductAddedToCart(): Promise<boolean> {
+  async isProductAddedToCart(): Promise<boolean> {
+    Logger.info('Product Page', 'Checking if product was added to cart');
     try {
-      const successMessage = await $('.message-success.success.message');
-      Logger.info('product Page', "success message dispayed");
-      return await successMessage.isDisplayed();
+      return await this.successMessage.isDisplayed();
     } catch (err) {
-      Logger.error('product Page', `Cart success message not visible: ${err}`);
+      Logger.error('Product Page', `Success message not visible: ${err}`);
       return false;
     }
   }
-  
-  
-
 }
 
-export default  ProductPage;
+export default ProductPage;

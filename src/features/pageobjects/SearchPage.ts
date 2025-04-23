@@ -5,9 +5,6 @@ export default class SearchPage {
   get searchInput() { return $('#search'); }
   get searchButton() { return $('button.action.search'); }
 
-  get results() {
-    return $$('//*[@id="maincontent"]/div[3]/div[1]/div[2]/div[2]/ol'); 
-  }
 
   async searchFor(productName: string) {
     Logger.info('Search Page',`Searching for product: ${productName}`);
@@ -30,15 +27,17 @@ export default class SearchPage {
     return $('#toolbar-amount');
   }
 
-  async isToolbarAmountVisible(): Promise<boolean> {
+  async isToolbarAmountVisible(): Promise<boolean> {  
+    
+    Logger.info('Search Page', 'Checking for toolbar amount visibility...');
+  
     const isExisting = await this.toolbarAmount.isExisting();
-
-    if (isExisting) {
-      Logger.info('Search Page', 'Toolbar amount is visible.');
-    } else {
-      Logger.info('Search Page', 'Toolbar amount is NOT visible.');
-    }
-
+  
+    Logger.info(
+      'Search Page',
+      `Toolbar amount is ${isExisting ? 'visible' : 'NOT visible'}.`
+    );
+  
     return isExisting;
   }
 
