@@ -26,27 +26,21 @@ export default class SearchPage {
     Logger.info('Search Page',"clicked search button");
   }
 
-  async hasResults(): Promise<boolean> {
-    console.log("Checking if the results list has elements...");
-
-    const results = this.results;
-
-    if (!results) {
-      console.warn("Results list is undefined or null.");
-      return false;
-    }
-
-    if (await results.length === 0) {
-      console.info("No results found in the DOM.");
-      return false;
-    }
-
-    console.info(`Found ${results.length} result(s) in the DOM.`);
-    return true;
+  get toolbarAmount(): ChainablePromiseElement {
+    return $('#toolbar-amount');
   }
-}
-  
-  
+
+  async isToolbarAmountVisible(): Promise<boolean> {
+    const isExisting = await this.toolbarAmount.isExisting();
+
+    if (isExisting) {
+      Logger.info('Search Page', 'Toolbar amount is visible.');
+    } else {
+      Logger.info('Search Page', 'Toolbar amount is NOT visible.');
+    }
+
+    return isExisting;
+  }
 
   
-  
+}
